@@ -1,0 +1,38 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "telugu-translate-backend": {
+      "root": "backend",
+      "framework": "flask",
+      "buildCommand": "pip install -r requirements.txt",
+      "entrypoint": "app.py"
+    },
+    "telugu-translate-frontend": {
+      "root": "frontend",
+      "framework": "vite",
+      "buildCommand": "npm install && npm run build",
+      "outputDirectory": "dist"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api",
+      "destination": {
+        "service": "telugu-translate-backend"
+      }
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "telugu-translate-backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "telugu-translate-frontend"
+      }
+    }
+  ]
+}
+
